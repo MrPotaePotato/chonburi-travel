@@ -18,7 +18,7 @@ export function createNavbar(onNavigate, onSearch) {
 
         <!-- Desktop Navigation Links -->
         <nav class="hidden md:flex items-center gap-1 lg:gap-2">
-          <button data-[#nav="home"] class="nav-link px-3 py-2 text-sm font-medium text-slate-700 hover:text-[#006B9E] rounded-lg transition-colors flex items-center gap-1.5">
+          <button data-nav="home" class="nav-link px-3 py-2 text-sm font-medium text-slate-700 hover:text-[#006B9E] rounded-lg transition-colors flex items-center gap-1.5">
             <i data-lucide="home" class="w-4 h-4"></i> หน้าแรก
           </button>
           <button data-nav="districts" class="nav-link px-3 py-2 text-sm font-medium text-slate-700 hover:text-[#006B9E] rounded-lg transition-colors flex items-center gap-1.5">
@@ -26,6 +26,9 @@ export function createNavbar(onNavigate, onSearch) {
           </button>
           <button data-nav="map" class="nav-link px-3 py-2 text-sm font-medium text-slate-700 hover:text-[#006B9E] rounded-lg transition-colors flex items-center gap-1.5">
             <i data-lucide="map" class="w-4 h-4"></i> แผนที่
+          </button>
+          <button data-nav="about" class="nav-link px-3 py-2 text-sm font-medium text-slate-700 hover:text-[#006B9E] rounded-lg transition-colors flex items-center gap-1.5">
+            <i data-lucide="landmark" class="w-4 h-4"></i> ประวัติชลบุรี
           </button>
           <button data-nav="eat-drink" class="nav-link px-3 py-2 text-sm font-medium text-slate-700 hover:text-[#006B9E] rounded-lg transition-colors flex items-center gap-1.5">
             <i data-lucide="utensils" class="w-4 h-4"></i> กิน & ดื่ม
@@ -44,11 +47,11 @@ export function createNavbar(onNavigate, onSearch) {
         <!-- Right Quick Actions / Search & Mobile Toggle -->
         <div class="flex items-center gap-2">
           <!-- Desktop Search Trigger -->
-          <div class="relative hidden sm:block w-48 lg:w-64">
+          <div class="relative hidden sm:block w-48 lg:w-56">
             <input 
               type="text" 
               id="header-search-input"
-              placeholder="ค้นหาสานที่, คาเฟ่, ที่พัก..." 
+              placeholder="ค้นหาสถานที่..." 
               class="w-full pl-9 pr-4 py-2 text-sm bg-slate-100/80 border border-transparent focus:border-[#00A8C6] focus:bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00A8C6]/20 transition-all"
             >
             <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
@@ -83,14 +86,17 @@ export function createNavbar(onNavigate, onSearch) {
             <button data-nav="home" class="drawer-link w-full text-left px-4 py-3 font-medium text-slate-700 hover:bg-slate-50 hover:text-[#006B9E] rounded-xl flex items-center gap-3">
               <i data-lucide="home" class="w-5 h-5 text-[#00A8C6]"></i> หน้าแรก
             </button>
+            <button data-nav="about" class="drawer-link w-full text-left px-4 py-3 font-medium text-slate-700 hover:bg-slate-50 hover:text-[#006B9E] rounded-xl flex items-center gap-3">
+              <i data-lucide="landmark" class="w-5 h-5 text-[#00A8C6]"></i> ประวัติจังหวัดชลบุรี
+            </button>
             <button data-nav="districts" class="drawer-link w-full text-left px-4 py-3 font-medium text-slate-700 hover:bg-slate-50 hover:text-[#006B9E] rounded-xl flex items-center gap-3">
               <i data-lucide="map-pin" class="w-5 h-5 text-[#00A8C6]"></i> สำรวจ 11 อำเภอ
             </button>
-            <button data-nav="map" class="drawer-link w-full text-left px-4 py-3 font-medium text-slate-700 hover:bg-slate-50 hover:text-[#006B9E] rounded-xl flex items-center gap-3">
+            <button data-nav="map" class="drawer-link w-full text-left px-4 py-3 font-medium text-slate-700 hover:bg-slate-50 hover:text-[#00A8C6] rounded-xl flex items-center gap-3">
               <i data-lucide="map" class="w-5 h-5 text-[#00A8C6]"></i> แผนที่ท่องเที่ยว
             </button>
             <button data-nav="eat-drink" class="drawer-link w-full text-left px-4 py-3 font-medium text-slate-700 hover:bg-slate-50 hover:text-[#006B9E] rounded-xl flex items-center gap-3">
-              <i data-lucide="utensils" class="w-5 h-5 text-[#00A8C6]"></i> กิน & ดื่ม (ร้านอาหาร/คาเฟ่)
+              <i data-lucide="utensils" class="w-5 h-5 text-[#00A8C6]"></i> กิน & ดื่ม
             </button>
             <button data-nav="hotels" class="drawer-link w-full text-left px-4 py-3 font-medium text-slate-700 hover:bg-slate-50 hover:text-[#006B9E] rounded-xl flex items-center gap-3">
               <i data-lucide="hotel" class="w-5 h-5 text-[#00A8C6]"></i> ค้นหาที่พัก
@@ -118,7 +124,6 @@ export function createNavbar(onNavigate, onSearch) {
       const targetNav = btn.getAttribute("data-nav");
       if (targetNav) {
         onNavigate(targetNav);
-        // Close drawer if open
         header.querySelector("#mobile-drawer").classList.add("hidden");
       }
     });

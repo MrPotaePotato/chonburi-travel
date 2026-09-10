@@ -7,7 +7,7 @@ import { generateTripItinerary } from './components/planner.js';
 
 // Application State
 const state = {
-  currentView: 'home', // 'home' | 'districts' | 'district-detail' | 'map' | 'place-detail' | 'hotels' | 'eat-drink' | 'photo-spots' | 'trip-planner' | 'saved'
+  currentView: 'home', // 'home' | 'districts' | 'district-detail' | 'map' | 'place-detail' | 'hotels' | 'eat-drink' | 'photo-spots' | 'trip-planner' | 'saved' | 'about'
   selectedDistrictId: null,
   selectedPlaceId: null,
   savedPlaceIds: JSON.parse(localStorage.getItem('chonburi_saved_places') || '[]'),
@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initApp() {
   const headerContainer = document.getElementById('header-container');
-  const bottomNavContainer = document.getElementById('bottom-nav-container');
 
   // Render Header Navbar
   const navbarEl = createNavbar((targetView) => {
@@ -98,6 +97,9 @@ function renderCurrentView() {
     case 'home':
       main.appendChild(createHomeView());
       break;
+    case 'about':
+      main.appendChild(createAboutView());
+      break;
     case 'districts':
       main.appendChild(createDistrictsView());
       break;
@@ -136,6 +138,183 @@ function refreshLucideIcons() {
   if (window.lucide) {
     window.lucide.createIcons();
   }
+}
+
+/* ==========================================================================
+   ABOUT & HISTORY VIEW (ประวัติจังหวัดชลบุรี)
+   ========================================================================== */
+function createAboutView() {
+  const container = document.createElement('div');
+  container.className = 'max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10';
+
+  container.innerHTML = `
+    <!-- Header Title -->
+    <div class="text-center max-w-3xl mx-auto space-y-3">
+      <span class="text-[#00A8C6] font-bold text-xs uppercase tracking-widest bg-cyan-50 px-3 py-1 rounded-full border border-cyan-100">
+        🏛️ HISTORICAL & CULTURAL HERITAGE
+      </span>
+      <h1 class="text-3xl sm:text-5xl font-black text-[#172B3A]">ประวัติจังหวัดชลบุรี</h1>
+      <p class="text-slate-500 text-sm sm:text-base leading-relaxed">
+        จังหวัดชายฝั่งทะเลภาคตะวันออกของประเทศไทย ตั้งอยู่ริมอ่าวไทย มีพื้นที่ประมาณ 4,363 ตารางกิโลเมตร แบ่งการปกครองออกเป็น 11 อำเภอ
+      </p>
+    </div>
+
+    <!-- Overview Banner Card -->
+    <div class="bg-gradient-to-r from-[#006B9E] to-[#00A8C6] rounded-3xl p-6 sm:p-10 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-2">
+        <h2 class="text-2xl font-bold">11 อำเภอศูนย์กลางแห่งภาคตะวันออก</h2>
+        <p class="text-cyan-100 text-xs sm:text-sm">
+          เมืองชลบุรี • บ้านบึง • หนองใหญ่ • บางละมุง • พานทอง • พนัสนิคม • ศรีราชา • เกาะสีชัง • สัตหีบ • บ่อทอง • เกาะจันทร์
+        </p>
+      </div>
+      <div class="px-5 py-3 bg-white/20 backdrop-blur-md rounded-2xl text-center shrink-0">
+        <span class="block text-2xl font-extrabold">4,363</span>
+        <span class="text-[11px] text-cyan-100">ตารางกิโลเมตร</span>
+      </div>
+    </div>
+
+    <!-- Timeline Sections -->
+    <div class="space-y-8">
+      <!-- Section 1 -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-md hover:shadow-lg transition-shadow">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl shadow-inner">
+            🏺
+          </div>
+          <div>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-[#172B3A]">ความเป็นมาในอดีต</h2>
+            <span class="text-xs text-slate-400 font-medium">หลักฐานการตั้งถิ่นฐานและเส้นทางเดินเรือโบราณ</span>
+          </div>
+        </div>
+        <div class="text-sm text-slate-600 space-y-3 leading-relaxed border-t border-slate-50 pt-4">
+          <p>
+            พื้นที่จังหวัดชลบุรีมีหลักฐานการตั้งถิ่นฐานของมนุษย์มาตั้งแต่สมัยก่อนประวัติศาสตร์ โดยพบแหล่งโบราณคดีและหลักฐานทางวัฒนธรรมหลายแห่ง โดยเฉพาะบริเวณ <strong class="text-[#006B9E]">พนัสนิคม</strong> ซึ่งเป็นพื้นที่ที่มีความสำคัญทางประวัติศาสตร์และวัฒนธรรมมาอย่างยาวนาน
+          </p>
+          <p>
+            ในสมัยโบราณ บริเวณชายฝั่งชลบุรีเป็นพื้นที่ที่มีความสำคัญด้านการเดินเรือและการค้าทางทะเล เนื่องจากตั้งอยู่ใกล้อ่าวไทยและมีเส้นทางเชื่อมโยงกับชุมชนชายฝั่งอื่น ๆ ต่อมาในสมัยกรุงศรีอยุธยาและกรุงรัตนโกสินทร์ พื้นที่ชลบุรีมีบทบาทเพิ่มขึ้นในด้านการค้า การประมง และการเดินทางทางทะเล รวมทั้งเป็นพื้นที่ที่มีชุมชนตั้งอยู่ตามชายฝั่งและลำน้ำ
+          </p>
+        </div>
+      </div>
+
+      <!-- Section 2 -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-md hover:shadow-lg transition-shadow">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-2xl bg-blue-100 text-[#006B9E] flex items-center justify-center text-2xl shadow-inner">
+            👑
+          </div>
+          <div>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-[#172B3A]">ชลบุรีในสมัยรัตนโกสินทร์</h2>
+            <span class="text-xs text-slate-400 font-medium">ขยายตัวชุมชนชายทะเล & พระราชฐานเกาะสีชัง</span>
+          </div>
+        </div>
+        <div class="text-sm text-slate-600 space-y-3 leading-relaxed border-t border-slate-50 pt-4">
+          <p>
+            ในช่วงต้นกรุงรัตนโกสินทร์ ชุมชนต่าง ๆ ในพื้นที่ชลบุรีมีการขยายตัวมากขึ้น โดยเฉพาะชุมชนชายทะเลและชุมชนตลาด เช่น อ่างศิลา บางแสน พนัสนิคม และศรีราชา
+          </p>
+          <p>
+            <strong class="text-[#006B9E]">เกาะสีชัง</strong> มีความสำคัญอย่างมากในประวัติศาสตร์ไทย โดยเฉพาะในสมัยรัชกาลที่ 5 เนื่องจากพระบาทสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัวทรงเคยเสด็จประพาสเกาะสีชัง และมีการก่อสร้างพระราชฐานบนเกาะ ซึ่งปัจจุบันรู้จักกันในชื่อ <strong class="text-[#006B9E]">พระจุฑาธุชราชฐาน</strong> จึงกลายเป็นหนึ่งในพื้นที่ที่มีความสำคัญทั้งทางประวัติศาสตร์และการท่องเที่ยวของจังหวัด
+          </p>
+        </div>
+      </div>
+
+      <!-- Section 3 -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-md hover:shadow-lg transition-shadow">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-2xl bg-cyan-100 text-[#00A8C6] flex items-center justify-center text-2xl shadow-inner">
+            🚂
+          </div>
+          <div>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-[#172B3A]">การพัฒนาในยุคสมัยใหม่</h2>
+            <span class="text-xs text-slate-400 font-medium">คมนาคม ถนน รถไฟ และการท่องเที่ยวเติบโต</span>
+          </div>
+        </div>
+        <div class="text-sm text-slate-600 space-y-3 leading-relaxed border-t border-slate-50 pt-4">
+          <p>
+            เมื่อประเทศไทยเริ่มพัฒนาระบบคมนาคมและโครงสร้างพื้นฐาน จังหวัดชลบุรีได้รับประโยชน์จากการเชื่อมโยงกับกรุงเทพมหานครและจังหวัดอื่น ๆ ในภาคตะวันออก โดยเฉพาะการพัฒนาเส้นทางถนนและทางรถไฟ ทำให้การเดินทาง การค้าขาย และการขนส่งสินค้าสะดวกมากขึ้น
+          </p>
+          <p>
+            พื้นที่ <strong class="text-[#006B9E]">ศรีราชาและแหลมฉบัง</strong> มีบทบาทเพิ่มขึ้นอย่างต่อเนื่องจากการพัฒนาท่าเรือและอุตสาหกรรม ขณะที่พื้นที่ <strong class="text-[#006B9E]">พัทยา บางแสน และสัตหีบ</strong> เติบโตขึ้นอย่างก้าวกระโดดในด้านการท่องเที่ยวระดับโลก
+          </p>
+        </div>
+      </div>
+
+      <!-- Section 4 -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-md hover:shadow-lg transition-shadow">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-700 flex items-center justify-center text-2xl shadow-inner">
+            🏭
+          </div>
+          <div>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-[#172B3A]">ยุคอุตสาหกรรม & ท่าเรือน้ำลึก</h2>
+            <span class="text-xs text-slate-400 font-medium">แหลมฉบัง อมตะซิตี้ และศูนย์กลางเศรษฐกิจ</span>
+          </div>
+        </div>
+        <div class="text-sm text-slate-600 space-y-3 leading-relaxed border-t border-slate-50 pt-4">
+          <p>
+            ชลบุรีกลายเป็นหนึ่งในศูนย์กลางอุตสาหกรรมที่สำคัญที่สุดของประเทศไทย หลังจากการพัฒนาพื้นที่ชายฝั่งทะเลภาคตะวันออก
+          </p>
+          <p>
+            <strong class="text-[#006B9E]">แหลมฉบัง</strong> ได้รับการพัฒนาให้เป็นท่าเรือน้ำลึกและศูนย์กลางการขนส่งสินค้าระหว่างประเทศ ขณะเดียวกันก็เกิดนิคมอุตสาหกรรมและโรงงานจำนวนมาก เช่น อมตะซิตี้ ชลบุรี ทำให้จังหวัดมีบทบาทสำคัญมหาศาลต่อเศรษฐกิจของประเทศไทย
+          </p>
+        </div>
+      </div>
+
+      <!-- Section 5: Current Status (7 Dimensions) -->
+      <div class="bg-gradient-to-br from-slate-900 to-[#172B3A] rounded-3xl p-6 sm:p-10 text-white shadow-2xl space-y-6">
+        <div class="flex items-center gap-3">
+          <span class="text-3xl">🏖️</span>
+          <div>
+            <h2 class="text-2xl font-extrabold">ชลบุรีในปัจจุบัน & เขต EEC</h2>
+            <p class="text-xs text-cyan-200">ความหลากหลายทางเศรษฐกิจ และบทบาทในเขตพัฒนาพิเศษภาคตะวันออก</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 space-y-1">
+            <span class="text-lg">🏖️</span>
+            <h3 class="font-bold text-sm text-cyan-300">การท่องเที่ยว</h3>
+            <p class="text-xs text-slate-300">พัทยา บางแสน เกาะล้าน เกาะสีชัง สัตหีบ</p>
+          </div>
+
+          <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 space-y-1">
+            <span class="text-lg">🏭</span>
+            <h3 class="font-bold text-sm text-cyan-300">อุตสาหกรรม</h3>
+            <p class="text-xs text-slate-300">แหลมฉบัง อมตะซิตี้ และพื้นที่เศรษฐกิจ</p>
+          </div>
+
+          <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 space-y-1">
+            <span class="text-lg">🚢</span>
+            <h3 class="font-bold text-sm text-cyan-300">การขนส่ง & โลจิสติกส์</h3>
+            <p class="text-xs text-slate-300">ท่าเรือน้ำลึกแหลมฉบังระดับนานาชาติ</p>
+          </div>
+
+          <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 space-y-1">
+            <span class="text-lg">🐟</span>
+            <h3 class="font-bold text-sm text-cyan-300">ประมง & อาหารทะเล</h3>
+            <p class="text-xs text-slate-300">ชุมชนชายฝั่ง ตลาดหนองมน อ่างศิลา</p>
+          </div>
+
+          <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 space-y-1">
+            <span class="text-lg">🌾</span>
+            <h3 class="font-bold text-sm text-cyan-300">เกษตรกรรม</h3>
+            <p class="text-xs text-slate-300">ผลไม้ พืชไร่ และเกษตรตอนใน</p>
+          </div>
+
+          <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 space-y-1">
+            <span class="text-lg">🏛️</span>
+            <h3 class="font-bold text-sm text-cyan-300">วัฒนธรรม & ประวัติศาสตร์</h3>
+            <p class="text-xs text-slate-300">พนัสนิคม เกาะสีชัง อ่างศิลา ชุมชนเก่า</p>
+          </div>
+        </div>
+
+        <div class="p-4 bg-[#00A8C6]/20 border border-[#00A8C6]/40 rounded-2xl text-xs text-cyan-100 leading-relaxed">
+          ปัจจุบันชลบุรียังเป็นจังหวัดสำคัญของ <strong>เขตพัฒนาพิเศษภาคตะวันออก (EEC)</strong> ร่วมกับระยองและฉะเชิงเทรา ทำให้มีบทบาทสำคัญต่อการลงทุน อุตสาหกรรม เทคโนโลยี และโครงสร้างพื้นฐานอนาคตของประเทศไทย
+        </div>
+      </div>
+    </div>
+  `;
+
+  return container;
 }
 
 /* ==========================================================================
@@ -179,7 +358,7 @@ function createHomeView() {
 
         <!-- Quick Category Tags -->
         <div class="flex flex-wrap items-center justify-center gap-2 mt-6">
-          <button data-[#category="sea"] class="quick-cat-btn px-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-medium backdrop-blur-sm border border-white/20 transition-all">
+          <button data-category="sea" class="quick-cat-btn px-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-medium backdrop-blur-sm border border-white/20 transition-all">
             🏖️ ทะเล
           </button>
           <button data-category="nature" class="quick-cat-btn px-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-medium backdrop-blur-sm border border-white/20 transition-all">
@@ -195,6 +374,24 @@ function createHomeView() {
             🏨 ที่พัก
           </button>
         </div>
+      </div>
+    </section>
+
+    <!-- HISTORY PREVIEW CARD -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-gradient-to-br from-[#172B3A] to-[#006B9E] rounded-3xl p-6 sm:p-10 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="space-y-2 text-center md:text-left">
+          <span class="text-xs font-bold uppercase tracking-widest text-[#00A8C6] bg-white/10 px-3 py-1 rounded-full">
+            🏺 PROVINCIAL HISTORY
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-bold">ประวัติความเป็นมาของจังหวัดชลบุรี</h2>
+          <p class="text-xs sm:text-sm text-cyan-100 max-w-2xl">
+            สัมผัสเรื่องราวประวัติศาสตร์ตั้งแต่อดีต สมัยรัตนโกสินทร์ ร.5 เสด็จประพาสเกาะสีชัง สู่ศูนย์กลางอุตสาหกรรมแหลมฉบัง และ EEC ในปัจจุบัน
+          </p>
+        </div>
+        <button id="home-read-about-btn" class="px-6 py-3 bg-[#00A8C6] hover:bg-[#0094b0] text-white font-bold text-sm rounded-xl shadow-lg transition-all shrink-0 flex items-center gap-2">
+          <i data-lucide="book-open" class="w-4 h-4"></i> อ่านประวัติฉบับเต็ม →
+        </button>
       </div>
     </section>
 
@@ -255,7 +452,7 @@ function createHomeView() {
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          ${PLACES.filter(p => p.isTrending).slice(0, 6).map(p => {
+          ${PLACES.slice(0, 6).map(p => {
             const districtObj = DISTRICTS.find(d => d.id === p.districtId);
             return `
               <div data-place-id="${p.id}" class="place-card bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 card-hover cursor-pointer group flex flex-col justify-between">
@@ -310,7 +507,7 @@ function createHomeView() {
             🌿
           </div>
           <h3 class="font-bold text-[#172B3A]">ธรรมชาติ & เขา</h3>
-          <p class="text-xs text-slate-500 mt-1">เขาเขียว อ่างเก็บน้ำ</p>
+          <p class="text-xs text-slate-500 mt-1">เขาเขียว เขาระเบิด</p>
         </div>
 
         <div data-cat-nav="cafe" class="cat-card p-6 bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 rounded-2xl text-center card-hover cursor-pointer group">
@@ -380,6 +577,11 @@ function createHomeView() {
         navigateTo('map');
       }
     });
+  }
+
+  const readAboutBtn = container.querySelector('#home-read-about-btn');
+  if (readAboutBtn) {
+    readAboutBtn.addEventListener('click', () => navigateTo('about'));
   }
 
   container.querySelectorAll('.district-card').forEach(card => {
@@ -537,19 +739,19 @@ function createDistrictDetailView(districtId) {
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="bg-white rounded-2xl p-6 shadow-md border border-slate-100 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
         <div class="p-4 border-r border-slate-100 last:border-0">
-          <span class="text-3xl font-extrabold text-[#006B9E]">${district.placesCount}</span>
-          <span class="block text-xs text-slate-500 font-medium mt-1">สถานที่ท่องเที่ยว</span>
+          <span class="text-3xl font-extrabold text-[#006B9E]">${districtPlaces.length}</span>
+          <span class="block text-xs text-slate-500 font-medium mt-1">สถานที่ในอำเภอ</span>
         </div>
         <div class="p-4 border-r border-slate-100 last:border-0">
-          <span class="text-3xl font-extrabold text-[#00A8C6]">${district.cafesCount}</span>
-          <span class="block text-xs text-slate-500 font-medium mt-1">คาเฟ่สุดชิค</span>
+          <span class="text-3xl font-extrabold text-[#00A8C6]">${districtPlaces.filter(p => p.category === 'cafe').length}</span>
+          <span class="block text-xs text-slate-500 font-medium mt-1">คาเฟ่</span>
         </div>
         <div class="p-4 border-r border-slate-100 last:border-0">
-          <span class="text-3xl font-extrabold text-[#F4B942]">${district.restaurantsCount}</span>
+          <span class="text-3xl font-extrabold text-[#F4B942]">${districtPlaces.filter(p => p.category === 'restaurant').length}</span>
           <span class="block text-xs text-slate-500 font-medium mt-1">ร้านอาหาร</span>
         </div>
         <div class="p-4">
-          <span class="text-3xl font-extrabold text-emerald-600">${district.hotelsCount}</span>
+          <span class="text-3xl font-extrabold text-emerald-600">${districtPlaces.filter(p => p.category === 'hotel').length}</span>
           <span class="block text-xs text-slate-500 font-medium mt-1">ที่พัก & รีสอร์ท</span>
         </div>
       </div>
@@ -674,7 +876,7 @@ function createMapView() {
           </label>
           <label class="flex items-center gap-2 text-xs text-slate-700 cursor-pointer">
             <input type="checkbox" value="history" class="map-cat-checkbox rounded text-[#006B9E]" ${state.mapFilter.categories.includes('history') ? 'checked' : ''}>
-            <span>🏛️ ประวัติศาสตร์ & พิพิธภัณฑ์</span>
+            <span>🏛️ ประวัติศาสตร์ & วัด</span>
           </label>
         </div>
       </div>
@@ -692,17 +894,14 @@ function createMapView() {
 
   const getFilteredPlaces = () => {
     return PLACES.filter(p => {
-      // Search query
       if (state.searchQuery) {
         const q = state.searchQuery.toLowerCase();
         const matchName = p.nameTh.toLowerCase().includes(q) || p.nameEn.toLowerCase().includes(q);
         if (!matchName) return false;
       }
-      // Districts
       if (state.mapFilter.districts.length > 0) {
         if (!state.mapFilter.districts.includes(p.districtId)) return false;
       }
-      // Categories
       if (state.mapFilter.categories.length > 0) {
         if (!state.mapFilter.categories.includes(p.category)) return false;
       }
@@ -793,7 +992,7 @@ function createPlaceDetailView(placeId) {
           ${districtObj ? districtObj.nameTh : 'ชลบุรี'}
         </span>
         <h1 class="text-3xl sm:text-5xl font-black mt-2">${place.nameTh}</h1>
-        <p class="text-cyan-100 text-sm sm:text-base mt-1">${place.nameEn}</p>
+        <p class="text-cyan-100 text-sm sm:text-base mt-1">${place.subcategory || place.category}</p>
       </div>
     </div>
 
@@ -806,7 +1005,7 @@ function createPlaceDetailView(placeId) {
             <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i> ${place.rating}
           </div>
           <span class="text-slate-300">•</span>
-          <span class="text-slate-500 text-sm">${place.reviewsCount || 500}+ รีวิว</span>
+          <span class="text-slate-500 text-sm">${place.reviewsCount || 200}+ รีวิว</span>
         </div>
 
         <div>
@@ -860,7 +1059,7 @@ function createPlaceDetailView(placeId) {
           
           <div id="place-mini-map" class="w-full h-44 rounded-xl overflow-hidden border border-slate-100"></div>
 
-          <a href="https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lng}" target="_blank" class="w-full py-3 bg-[#006B9E] hover:bg-[#005680] text-white text-xs font-bold rounded-xl shadow-md flex items-center justify-center gap-2 transition-all">
+          <a href="${place.mapsUrl || `https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lng}`}" target="_blank" class="w-full py-3 bg-[#006B9E] hover:bg-[#005680] text-white text-xs font-bold rounded-xl shadow-md flex items-center justify-center gap-2 transition-all">
             <i data-lucide="navigation" class="w-4 h-4"></i> เปิดใน Google Maps →
           </a>
         </div>
@@ -926,7 +1125,7 @@ function createHotelsView() {
     <div class="text-center max-w-2xl mx-auto space-y-2">
       <span class="text-[#00A8C6] font-bold text-xs uppercase tracking-wider">WHERE TO STAY</span>
       <h1 class="text-3xl font-extrabold text-[#172B3A]">ที่พัก & รีสอร์ทในชลบุรี</h1>
-      <p class="text-slate-500 text-sm">คัดสรรที่พักคุณภาพ วิวสวย ติดทะเล ครอบคลุมทั้ง 11 อำเภอ</p>
+      <p class="text-slate-500 text-sm">คัดสรรที่พักคุณภาพ ครอบคลุมทั้ง 11 อำเภอของจังหวัดชลบุรี</p>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -938,28 +1137,23 @@ function createHotelsView() {
               <div class="relative h-52 overflow-hidden">
                 <img src="${h.cover}" alt="${h.nameTh}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                 <span class="absolute top-3 left-3 bg-[#006B9E] text-white px-2.5 py-1 rounded-lg text-xs font-semibold">
-                  📍 ${districtObj ? districtObj.nameTh : 'ชลบุรี'}
+                  📍 ${districtObj ? districtObj.nameTh : h.district || 'ชลบุรี'}
                 </span>
                 <span class="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-2 py-1 rounded-lg text-xs font-bold text-amber-500">
                   ★ ${h.rating}
                 </span>
               </div>
               <div class="p-5">
-                <div class="flex items-center justify-between mb-1">
-                  <h3 class="font-bold text-lg text-[#172B3A]">${h.nameTh}</h3>
-                  <span class="text-xs font-bold text-[#00A8C6]">${h.priceRange || '฿฿'}</span>
-                </div>
-                <p class="text-xs text-slate-500 line-clamp-2 mb-4">${h.shortDesc}</p>
-                
+                <h3 class="font-bold text-lg text-[#172B3A] mb-1">${h.nameTh}</h3>
+                <p class="text-xs text-slate-500 line-clamp-2 mb-4">${h.address}</p>
                 <div class="flex flex-wrap gap-1.5">
-                  ${(h.amenities || ["Wi-Fi", "Parking", "Pool"]).map(a => `
-                    <span class="text-[10px] px-2 py-0.5 bg-slate-100 text-slate-600 rounded font-medium">✓ ${a}</span>
-                  `).join('')}
+                  <span class="text-[10px] px-2 py-0.5 bg-slate-100 text-slate-600 rounded font-medium">✓ Wi-Fi</span>
+                  <span class="text-[10px] px-2 py-0.5 bg-slate-100 text-slate-600 rounded font-medium">✓ Parking</span>
                 </div>
               </div>
             </div>
             <div class="px-5 py-3 border-t border-slate-50 flex items-center justify-between text-xs text-[#006B9E] font-bold">
-              <span>เช็ครายละเอียดที่พัก</span>
+              <span>รายละเอียดที่พัก</span>
               <i data-lucide="chevron-right" class="w-4 h-4"></i>
             </div>
           </div>
@@ -991,7 +1185,7 @@ function createEatDrinkView() {
     <div class="text-center max-w-2xl mx-auto space-y-2">
       <span class="text-[#F4B942] font-bold text-xs uppercase tracking-wider">EAT & DRINK</span>
       <h1 class="text-3xl font-extrabold text-[#172B3A]">กิน & ดื่ม ในชลบุรี</h1>
-      <p class="text-slate-500 text-sm">ลิ้มรสก๋วยเตี๋ยวบ้านบึง ร้านอาหารทะเลสดๆ และคาเฟ่ถ่ายรูปสวย</p>
+      <p class="text-slate-500 text-sm">ลิ้มรสร้านอาหารอร่อย ร้านอาหารทะเล และคาเฟ่ถ่ายรูปสวยทั้ง 11 อำเภอ</p>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -1011,8 +1205,8 @@ function createEatDrinkView() {
               </div>
               <div class="p-5">
                 <h3 class="font-bold text-base text-[#172B3A]">${p.nameTh}</h3>
-                <p class="text-xs text-slate-400 font-medium mb-2">📍 ${districtObj ? districtObj.nameTh : 'ชลบุรี'}</p>
-                <p class="text-xs text-slate-500 line-clamp-2 mb-3">${p.shortDesc}</p>
+                <p class="text-xs text-slate-400 font-medium mb-2">📍 ${districtObj ? districtObj.nameTh : p.district || 'ชลบุรี'}</p>
+                <p class="text-xs text-slate-500 line-clamp-2 mb-3">${p.address}</p>
                 <div class="flex flex-wrap gap-1">
                   ${p.tags.map(t => `<span class="text-[10px] px-2 py-0.5 bg-amber-50 text-amber-700 rounded font-medium">${t}</span>`).join('')}
                 </div>
@@ -1060,7 +1254,7 @@ function createPhotoSpotsView() {
             
             <div class="absolute top-4 left-4">
               <span class="bg-white/20 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full">
-                📍 ${districtObj ? districtObj.nameTh : 'ชลบุรี'}
+                📍 ${districtObj ? districtObj.nameTh : p.district || 'ชลบุรี'}
               </span>
             </div>
 
