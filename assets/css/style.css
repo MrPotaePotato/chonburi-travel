@@ -11,6 +11,18 @@
   --card-bg: #FFFFFF;
 }
 
+/* Dark Mode Palette Overrides */
+html.dark {
+  --primary: #00A8C6;
+  --primary-hover: #008ba4;
+  --secondary: #38BDF8;
+  --highlight: #F4B942;
+  --bg-main: #0F172A; /* Slate 900 */
+  --text-main: #F8FAFC; /* Slate 50 */
+  --text-muted: #94A3B8; /* Slate 400 */
+  --card-bg: #1E293B; /* Slate 800 */
+}
+
 body {
   font-family: 'Prompt', 'Kanit', sans-serif;
   background-color: var(--bg-main);
@@ -18,6 +30,42 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode generic overrides */
+html.dark .bg-white {
+  background-color: #1E293B !important;
+  color: #F8FAFC !important;
+  border-color: #334155 !important;
+}
+
+html.dark .bg-slate-50 {
+  background-color: #0F172A !important;
+  color: #CBD5E1 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .bg-slate-100 {
+  background-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+html.dark .text-slate-800,
+html.dark .text-slate-700,
+html.dark .text-slate-600,
+html.dark .text-\[\#172B3A\] {
+  color: #F8FAFC !important;
+}
+
+html.dark .text-slate-500,
+html.dark .text-slate-400 {
+  color: #94A3B8 !important;
+}
+
+html.dark .border-slate-100,
+html.dark .border-slate-200 {
+  border-color: #334155 !important;
 }
 
 /* Custom Scrollbar */
@@ -27,6 +75,9 @@ body {
 }
 ::-webkit-scrollbar-track {
   background: #EAEFF2;
+}
+html.dark ::-webkit-scrollbar-track {
+  background: #1E293B;
 }
 ::-webkit-scrollbar-thumb {
   background: var(--secondary);
@@ -44,19 +95,17 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
+html.dark .glass-panel {
+  background: rgba(30, 41, 59, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .card-hover {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .card-hover:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 24px -6px rgba(0, 107, 158, 0.15);
-}
-
-/* Hero Badge */
-.hero-badge {
-  background: rgba(0, 168, 198, 0.15);
-  border: 1px solid rgba(0, 168, 198, 0.3);
-  color: var(--primary);
 }
 
 /* Custom Marker Styling for Leaflet Map */
@@ -81,31 +130,6 @@ body {
   z-index: 999;
 }
 
-/* Hide scrollbar for category pills scroll */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* Active tab animations */
-.nav-tab-active {
-  color: var(--primary);
-  font-weight: 600;
-  border-bottom: 3px solid var(--primary);
-}
-
-/* Mobile Bottom Navigation active pill */
-.mobile-nav-item.active {
-  color: var(--primary);
-}
-.mobile-nav-item.active .nav-icon {
-  transform: translateY(-2px);
-  color: var(--primary);
-}
-
 /* Custom Leaflet Popup Overrides */
 .leaflet-popup-content-wrapper {
   padding: 0;
@@ -113,24 +137,23 @@ body {
   overflow: hidden;
   box-shadow: 0 10px 25px rgba(23, 43, 58, 0.2);
 }
+html.dark .leaflet-popup-content-wrapper {
+  background: #1E293B;
+  color: #F8FAFC;
+}
 .leaflet-popup-content {
   margin: 0;
   width: 260px !important;
 }
-.leaflet-container a.leaflet-popup-close-button {
-  top: 8px;
-  right: 8px;
-  color: #fff;
-  background: rgba(0,0,0,0.5);
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 /* Line clamp helpers */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
